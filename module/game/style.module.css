@@ -1,0 +1,5 @@
+.food {
+    background: linear-gradient(45deg, #fbed96, #abecd6);
+    box-shadow: 0 0 20px #ffffff;
+    border-radius: 50%;
+}
