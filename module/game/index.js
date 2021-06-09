@@ -3,13 +3,13 @@ let foodsPos = [];
 let speeds = 100;
 let timer = null;
 
-const createFoods = () => {
+const createFoods = (panelSize) => {
     foodsPos = [];
-    const max = 19;
+    const max = panelSize;
     for (let i = 0; i < 3; i++) {
         foodsPos.push([
-            Math.round(Math.random() * (max + 1)),
-            Math.round(Math.random() * (max + 1)),
+            Math.round(Math.random() * max),
+            Math.round(Math.random() * max),
         ]);
     }
     foodsPos.forEach((food) => {
@@ -18,7 +18,7 @@ const createFoods = () => {
     });
 };
 
-export const eat = (snake) => {
+export const eat = (snake, panelSize) => {
     const pos = snake.body[snake.body.length - 1].pos;
     const $head = document.querySelector(`[pos="${pos}"]`);
     if ($head.classList.contains(style.food)) {
@@ -26,7 +26,7 @@ export const eat = (snake) => {
         snake.add(pos);
     }
     if (document.querySelectorAll(`.${style.food}`).length === 0) {
-        createFoods();
+        createFoods(panelSize);
     }
 };
 
@@ -34,18 +34,17 @@ export const addLevel = (snake) => {
     speeds = (Math.floor(snake.length / 3) / 20) * 10;
 };
 
-export const gameOver = (snake) => {
+export const gameOver = (snake, panelSize) => {
     const { pos } = snake.body[snake.body.length - 1];
     const [x, y] = pos;
 
-    if (x === 19 || y === 19) {
+    if (x === panelSize - 1 || y === panelSize - 1) {
         alert("game over");
         clearInterval(timer);
     }
 };
 
-export const createGame = ({ snake }) => {
-    createFoods();
+export const createGame = ({ snake, panelSize }) => {
     const loop = () => {
         timer = setInterval(() => {
             snake[snake.direction]();
@@ -53,6 +52,7 @@ export const createGame = ({ snake }) => {
     };
 
     const run = () => {
+        createFoods(panelSize);
         loop();
     };
 

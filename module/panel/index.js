@@ -1,7 +1,6 @@
 import style from "./style.module.css";
 
-export const createPanel = (container) => {
-    const defaultSize = 20;
+export const createPanel = ({ container, defaultSize = 20 }) => {
     const panel = document.createElement("div");
     panel.classList.add(style.panel);
     let content = "";
